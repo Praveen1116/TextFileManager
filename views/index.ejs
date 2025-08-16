@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="main w-full min-h-screen bg-zinc-900">
+        <div class="form p-10 text-white">
+            <form action="/create" method="post">
+                <input type="text" placeholder="Title goes here" name="title" class="w-full px-5 py-3 bg-zinc-800 text-white rounded-md outline-none">
+                <textarea placeholder="Details goes here" name="details" class="w-full px-5 py-3 mt-5 resize-none bg-zinc-800 text-white rounded-md outline-none"></textarea>
+                <input type="submit" value="Add Task" class="mt-5 px-5 py-3 bg-teal-500 text-white rounded-md cursor-pointer">
+            </form>
+        </div>
+
+        <div class="tasks flex gap-3 flex-wrap mt-8 p-10 text-white">
+            <% if(files.length > 0){ %>
+                <% files.forEach(function(val){ %>
+                    <div class="task min-w-72 rounded-md bg-zinc-800 px-3 py-4">
+                        <h1 class="text-white text-3xl tracking-tighter"><%= val %></h1>
+                        <div class="flex w-full justify-between items-center mt-3">
+                            <a href="/file/<%= val %>" class="text-blue-500 inline-block">Read More</a>
+                            <a href="/edit/<%= val %>" class="text-zinc-500 inline-block">Edit FileName</a>
+                            <form action="/delete" method="POST" style="display:inline;">
+                                <input type="hidden" name="filename" value="<%= val %>">
+                                <button type="submit" class="text-red-500 bg-transparent border-none cursor-pointer ml-2">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else{ %>
+                <h3 class="text-zinc-600">No tasks yet.</h3>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
